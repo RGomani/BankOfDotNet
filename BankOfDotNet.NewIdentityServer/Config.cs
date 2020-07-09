@@ -43,7 +43,9 @@ namespace BankOfDotNet.NewIdentityServer
             return new List<ApiResource>
             {
                 // This is the resource definition for the BankOfDotNet.API project
-                new ApiResource("BankOfDotNetAPI", "Customer API for BankOfDotNet")
+                new ApiResource("BankOfDotNetAPI", "Customer API for BankOfDotNet"),
+                new ApiResource("BankOfDotNetNewAPI", "Customer NewAPI for BankOfDotNet"),
+
             };
         }
 
@@ -116,7 +118,7 @@ namespace BankOfDotNet.NewIdentityServer
                     },
                     // Define the scope of this client (might be a console client, native app, ios app, web app)
                     // We are only allowing the client to access BankOfDotNetAPI resource
-                    AllowedScopes = { "BankOfDotNetAPI" }
+                    AllowedScopes = { "BankOfDotNetAPI", "BankOfDotNetNewAPI" }
                 },
 
                 // Used by BankOfDotNet.ConsoleResourceOwner
@@ -129,7 +131,7 @@ namespace BankOfDotNet.NewIdentityServer
                     {
                         new Secret("secretpass".Sha256())
                     },
-                    AllowedScopes = { "BankOfDotNetAPI" }
+                    AllowedScopes = { "BankOfDotNetAPI", "BankOfDotNetNewAPI" }
                 },
 
                 // Used by BankOfDotNet.MvcClient
@@ -177,8 +179,28 @@ namespace BankOfDotNet.NewIdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
-                    }
-                }
+                    } ,
+
+                } ,
+               new Client
+                {
+                    ClientId = "swaggerapiui",
+                    ClientName = "Swagger Api Ui",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+
+                    // For Implicit flow, the user is redirected from the client to the IS4
+                    // So we need a redirect URI which means how the user will be redirected "back"
+                    // after successful authentication with IS4
+                    // We are setting our MVC client port to 5003 
+                    // We are making use of signin-oidc which is for Open-ID connect
+                    RedirectUris = { "http://localhost:61324/swagger/oauth2-redirect.html" },
+
+                    // If the user logs-out from IS4, we need a post-logout redirect URI
+                    PostLogoutRedirectUris = { "http://localhost:61324/swagger" },
+
+                     AllowedScopes = { "BankOfDotNetAPI", "BankOfDotNetNewAPI" } ,
+                     AllowAccessTokensViaBrowser=true
+               }
 
             };
         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,12 +23,12 @@ namespace BankOfDotNet.API
         {
             // Set-up the plumming for our Identity server
             // We use "Bearer" which is the same output from Postman "token_type": "Bearer"
-            // when we call http://localhost:5000/connect/token to grab a token
+            // when we call http://localhost:2000/connect/token to grab a token
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
                     // This is the BankOfDotNet.IdentityServer which is running on port 5000
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = "http://localhost:2000";
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "BankOfDotNetAPI";
                 });
@@ -41,6 +42,11 @@ namespace BankOfDotNet.API
             //    opts.UseSqlite(Configuration.GetConnectionString("Users")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           // services.AddSwaggerGen(Option=> {
+
+               // Option.SwaggerDoc("v1",new Info{ });
+            
+           // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

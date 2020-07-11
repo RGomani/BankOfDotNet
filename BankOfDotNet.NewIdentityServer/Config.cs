@@ -44,7 +44,7 @@ namespace BankOfDotNet.NewIdentityServer
             {
                 // This is the resource definition for the BankOfDotNet.API project
                 new ApiResource("BankOfDotNetAPI", "Customer API for BankOfDotNet"),
-                new ApiResource("BankOfDotNetNewAPI", "Customer NewAPI for BankOfDotNet"),
+                new ApiResource("BankOfDotNetNewAPI", "Customer New API for Bank Of Dot Net"),
 
             };
         }
@@ -131,7 +131,7 @@ namespace BankOfDotNet.NewIdentityServer
                     {
                         new Secret("secretpass".Sha256())
                     },
-                    AllowedScopes = { "BankOfDotNetAPI", "BankOfDotNetNewAPI" }
+                    AllowedScopes = { "BankOfDotNetNewAPI", "BankOfDotNetNewAPI" }
                 },
 
                 // Used by BankOfDotNet.MvcClient
@@ -198,7 +198,7 @@ namespace BankOfDotNet.NewIdentityServer
                     // If the user logs-out from IS4, we need a post-logout redirect URI
                     PostLogoutRedirectUris = { "http://localhost:61324/swagger" },
 
-                     AllowedScopes = { "BankOfDotNetAPI", "BankOfDotNetNewAPI" } ,
+                     AllowedScopes = {  "BankOfDotNetNewAPI" } ,
                      AllowAccessTokensViaBrowser=true
                }
 
